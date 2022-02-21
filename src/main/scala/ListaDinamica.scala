@@ -37,7 +37,7 @@ class ListaDinamica:
         var atual = primeiro
         while atual.proximo != ultimo do atual = (atual.proximo)
         ultimo_=(atual)
-        ultimo.proximo_=(null)
+        ultimo proximo_=(null)
 
   def removerInicio =
     if primeiro !=  null then
