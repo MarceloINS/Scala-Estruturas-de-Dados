@@ -64,3 +64,5 @@ class ListaDinamica:
           print(s"${no.valor} ")
           loop(no.proximo)
         case None =>
+
+    loop(primeiro)

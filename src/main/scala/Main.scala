@@ -15,7 +15,8 @@
   lista adicionarInicio 25
   lista adicionarInicio 30
 
+  /*
   lista.removerFinal
   lista.removerInicio
-
+*/
   lista.exibir
