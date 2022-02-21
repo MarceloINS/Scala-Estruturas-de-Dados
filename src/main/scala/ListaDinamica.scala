@@ -1,54 +1,66 @@
-class ListaDinamica:
-  var _primeiro: No = null
-  var _ultimo: No = null
+import scala.annotation.tailrec
 
-  def primeiro_= (newPrimeiro: No) = _primeiro = newPrimeiro
+class ListaDinamica:
+  var _primeiro: Option[No] = None
+  var _ultimo: Option[No] = None
+
+  def primeiro_= (newPrimeiro: Option[No]) = _primeiro = newPrimeiro
   def primeiro = _primeiro
 
-  def ultimo_= (newUltimo: No) = _ultimo = newUltimo
+  def ultimo_= (newUltimo: Option[No]) = _ultimo = newUltimo
   def ultimo = _ultimo
 
   def adicionarFinal(newValor: Int) =
     var novo = new No
-    novo.valor_=(newValor)
-    if primeiro == null then
-      primeiro_=(novo)
-      ultimo_=(novo)
-    else
-      ultimo.proximo_=(novo)
-      ultimo_=(novo)
+    novo.valor = newValor
+
+    primeiro match
+      case Some(noPrime) =>
+        ultimo.get.proximo = Some(novo)
+        ultimo = Some(novo)
+      case None =>
+        primeiro = Some(novo)
+        ultimo = Some(novo)
 
   def adicionarInicio(newValor: Int) =
     var novo = new No
     novo.valor_=(newValor)
-    if primeiro == null then
-      primeiro_=(novo)
-      ultimo_=(novo)
-    else
-      novo.proximo_=(primeiro)
-      primeiro_=(novo)
+
+    primeiro match
+      case Some(noPrime) =>
+        novo.proximo = primeiro
+        primeiro = Some(novo)
+      case None =>
+        primeiro = Some(novo)
+        ultimo = Some(novo)
 
   def removerFinal =
-    if ultimo !=  null then
-      if(primeiro == ultimo) then
-        primeiro_=(null)
-        ultimo_=(null)
+    ultimo foreach { no =>
+      if primeiro == ultimo then
+        primeiro = None
+        ultimo = None
       else
+        //TODO Eliminar uso de variável!
         var atual = primeiro
-        while atual.proximo != ultimo do atual = (atual.proximo)
-        ultimo_=(atual)
-        ultimo proximo_=(null)
+        while atual.isDefined && atual.get.proximo != ultimo do atual = (atual.get.proximo)
+          ultimo_=(atual)
+          ultimo.get.proximo = None
+    }
 
   def removerInicio =
-    if primeiro !=  null then
-      if(primeiro == ultimo) then
-        primeiro_=(null)
-        ultimo_=(null)
+    primeiro foreach { prime =>
+      if (primeiro == ultimo) then
+        primeiro = None
+        ultimo = None
       else
-        primeiro_=(primeiro.proximo)
+        primeiro = primeiro.get.proximo
+    }
 
   def exibir =
-    var atual = primeiro
-    while atual != null do
-      print(s"${atual.valor} ")
-      atual = atual.proximo
+    @tailrec
+    def loop(noOpt: Option[No]): Unit =
+      noOpt match
+        case Some(no) =>
+          print(s"${no.valor} ")
+          loop(no.proximo)
+        case None =>
