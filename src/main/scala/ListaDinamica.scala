@@ -24,7 +24,7 @@ class ListaDinamica:
 
   def adicionarInicio(newValor: Int) =
     var novo = new No
-    novo.valor_=(newValor)
+    novo.valor = newValor
 
     primeiro match
       case Some(noPrime) =>
@@ -35,26 +35,26 @@ class ListaDinamica:
         ultimo = Some(novo)
 
   def removerFinal =
-    ultimo foreach { no =>
-      if primeiro == ultimo then
-        primeiro = None
-        ultimo = None
-      else
-        //TODO Eliminar uso de variável!
-        var atual = primeiro
-        while atual.isDefined && atual.get.proximo != ultimo do atual = (atual.get.proximo)
-          ultimo_=(atual)
-          ultimo.get.proximo = None
-    }
+    if primeiro == ultimo then
+      primeiro = None
+      ultimo = None
+    else
+      @tailrec
+      def loop(noOpt: Option[No]): Unit =
+        noOpt.get.proximo.get.proximo match
+          case Some(no) =>
+            loop(noOpt.get.proximo)
+          case None =>
+            ultimo = noOpt
+            ultimo.get.proximo = None
+      loop(primeiro)
 
   def removerInicio =
-    primeiro foreach { prime =>
       if (primeiro == ultimo) then
         primeiro = None
         ultimo = None
       else
         primeiro = primeiro.get.proximo
-    }
 
   def exibir =
     @tailrec
@@ -64,5 +64,29 @@ class ListaDinamica:
           print(s"${no.valor} ")
           loop(no.proximo)
         case None =>
+          println("")
 
     loop(primeiro)
+
+  def size =
+    @tailrec
+    def cont(noOpt: Option[No], x: Int = 0): Int =
+      noOpt match
+        case Some(no) =>
+          cont(noOpt.get.proximo, x+1)
+        case None =>
+          x
+    cont(primeiro)
+
+  def removerPosicao(posicao: Int) =
+    if posicao == 1 then primeiro = primeiro.get.proximo
+
+    def loop(noOpt: Option[No], posicao: Int): Unit =
+      noOpt match
+        case Some(no) =>
+          if posicao == 1 then
+            no.proximo = noOpt.get.proximo.get.proximo
+          else loop(no.proximo, posicao-1)
+        case None =>
+          println(s"Posição inválida")
+    loop(primeiro, posicao-1)

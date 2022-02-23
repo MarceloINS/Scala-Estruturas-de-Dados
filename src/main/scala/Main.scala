@@ -15,8 +15,20 @@
   lista adicionarInicio 25
   lista adicionarInicio 30
 
-  /*
   lista.removerFinal
+  lista.removerFinal
+  lista.removerFinal
+  lista.removerFinal
+  lista.removerFinal
+  
   lista.removerInicio
-*/
+
   lista.exibir
+  println(s"${lista.size}")
+
+  lista removerPosicao 5
+
+
+  lista.exibir
+
+  lista removerPosicao 10
