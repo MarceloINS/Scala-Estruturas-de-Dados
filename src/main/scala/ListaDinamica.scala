@@ -22,6 +22,18 @@ class ListaDinamica:
         primeiro = Some(novo)
         ultimo = Some(novo)
 
+  def adicionarFinal2(newValor: Int) =
+    ultimo match
+      case Some(no) =>
+        no.proximo = Some(new No)
+        ultimo = no.proximo
+        no.valor = newValor
+      case None =>
+        primeiro = Some(new No)
+        primeiro.get.valor = newValor
+        ultimo = primeiro
+
+
   def adicionarInicio(newValor: Int) =
     var novo = new No
     novo.valor = newValor

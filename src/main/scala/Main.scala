@@ -1,7 +1,7 @@
 @main def main =
   var lista = new ListaDinamica
 
-  lista adicionarFinal 30
+  /*lista adicionarFinal 30
   lista adicionarFinal 25
   lista adicionarFinal 20
   lista adicionarFinal 15
@@ -19,16 +19,18 @@
   lista.removerFinal
   lista.removerFinal
   lista.removerFinal
-  lista.removerFinal
+  lista.removerFinal*/
+
+  lista adicionarFinal2 10
   
-  lista.removerInicio
+  //lista.removerInicio
 
   lista.exibir
   println(s"${lista.size}")
 
-  lista removerPosicao 5
+  //lista removerPosicao 5
 
 
-  lista.exibir
+  //lista.exibir
 
-  lista removerPosicao 10
+  //lista removerPosicao 10
